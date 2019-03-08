@@ -1,8 +1,12 @@
 {% block content %}
     <form action="/q" method="post">
         <input type="text" name="text" placeholder="Where are you stuck?">
+        <input type="text" name="section", placeholder="Section">
         <input type="submit" value="Get Help">
-</form>
+    </form>
+{% for question in questions %}
+<p>{{question.text}}</p>
+<p>  {{question.section}}</p>
+<p> {{question.user_id}}</p>
+{% endfor %}
 {% endblock %}
-<p>{{questions}}</p>
-

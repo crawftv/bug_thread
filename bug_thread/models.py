@@ -9,7 +9,7 @@ class User(DB.Model):
 
 
 class Question(DB.Model):
-    id = DB.Column(DB.BigInteger,primary_key=True)
+    id = DB.Column(DB.Integer,primary_key=True)
     text = DB.Column(DB.Unicode(1500))
     user_id = DB.Column(DB.String,DB.ForeignKey('user.id'),
         nullable=False)

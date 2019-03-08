@@ -5,14 +5,10 @@ from werkzeug.exceptions import HTTPException
 from decouple import config
 from .models import DB, User,Question,Answer
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask
-from flask import jsonify
-from flask import redirect
-from flask import render_template
-from flask import session
-from flask import url_for
+from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from authlib.flask.client import OAuth
 from six.moves.urllib.parse import urlencode
+import datetime
 
 
 def create_app():
@@ -71,7 +67,8 @@ def create_app():
 
   @app.route('/login')
   def login():
-      return auth0.authorize_redirect(redirect_uri='http://127.0.0.1:5000/callback', audience='https://crawftv.auth0.com/userinfo')
+      return auth0.authorize_redirect(redirect_uri='http://127.0.0.1:5000/callback',
+       audience='https://crawftv.auth0.com/userinfo')
 
   
 
@@ -101,6 +98,14 @@ def create_app():
   @requires_auth
   def display_questions():
     questions = Question.query.all()
+    if request.method =='POST':
+      text = request.values["text"]
+      section = request.values['section']
+      q = Question(text=text, user_id=session['profile']['user_id'], solved_status=False, date=datetime.datetime.now(),
+        section = section)
+      DB.session.add(q)
+      DB.session.commit()
     return render_template('questions.html',questions=questions)
-
+  
+    
   return app

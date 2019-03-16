@@ -1,0 +1,16 @@
+{% block content %}
+<p>{{question.text}} {{question.section}} {{question.user_id}}</p>
+
+
+<div>
+    <form action="/q/{{question.id}}" method = "post">
+        <input type="text" name ="answer" placeholder="Do you have a solution" question_id={{question.id}} >
+        <input type="submit" value="answer">
+    </form>
+</div>
+{% if answers != None %}
+    {% for answer in answers %}
+        {{answer.text}}
+    {% endfor %}
+{% endif %}
+{% endblock %}

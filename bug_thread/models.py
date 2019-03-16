@@ -21,12 +21,12 @@ class Question(DB.Model):
     user = DB.relationship('User',backref='questions',lazy=True)
 
 class Answer(DB.Model):
-    id =DB.Column(DB.BigInteger,primary_key=True)
+    id =DB.Column(DB.Integer,primary_key=True)
     text = DB.Column(DB.Unicode(1500),nullable=False)
     user_id = DB.Column(DB.String,DB.ForeignKey('user.id'),
         nullable=False)
-    is_answer = DB.Column(DB.Boolean,nullable=False)
+    is_solution = DB.Column(DB.Boolean,nullable=False)
     date = DB.Column(DB.DateTime)
-    question_id = DB.Column(DB.BigInteger, DB.ForeignKey('question.id'),
+    question_id = DB.Column(DB.Integer, DB.ForeignKey('question.id'),
         nullable=False)
     user = DB.relationship('User',backref='answers')

@@ -5,8 +5,9 @@
         <input type="submit" value="Get Help">
     </form>
 {% for question in questions %}
-<p>{{question.text}}</p>
-<p>  {{question.section}}</p>
-<p> {{question.user_id}}</p>
+
+  <li><a href= "q/{{ question.id }}"">{{ question.text }}</a></li>
+  <p>{{ question.user_id }} </p>
+
 {% endfor %}
 {% endblock %}

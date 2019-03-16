@@ -3,7 +3,7 @@ import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
 from decouple import config
-from .models import DB, User,Question,Answer
+from .models import DB, User, Question, Answer
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from authlib.flask.client import OAuth
@@ -81,6 +81,7 @@ def create_app():
   
 
   @app.route('/logout')
+  @requires_auth
   def logout():
     # Clear session stored data
     session.clear()
@@ -107,5 +108,20 @@ def create_app():
       DB.session.commit()
     return render_template('questions.html',questions=questions)
   
+  @app.route('/q/<int:question_id>', methods=['GET','POST'])
+  @requires_auth
+  def display_individual_question(question_id):
+    question = Question.query.get(question_id)
+    answers = Answer.query.filter_by(question_id =question_id).all()
+  
+    if request.method == 'POST':
+      a = Answer(text=request.values['answer'], user_id=session['profile']['user_id'],
+       is_solution=False, date=datetime.datetime.now(), question_id=question_id)
+      DB.session.add(a)
+      DB.session.commit()
+  
+    return render_template('individual_question.html',answers=answers,question=question)
     
+
+
   return app

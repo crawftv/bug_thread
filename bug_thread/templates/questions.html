@@ -1,13 +1,33 @@
-{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/picnic">
+
     <form action="/q" method="post">
         <input type="text" name="text" placeholder="Where are you stuck?">
         <input type="text" name="section", placeholder="Section">
         <input type="submit" value="Get Help">
     </form>
-{% for question in questions %}
 
-  <li><a href= "q/{{ question.id }}"">{{ question.text }}</a></li>
-  <p>{{ question.user_id }} </p>
 
-{% endfor %}
-{% endblock %}
+
+
+    <table class="primary">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Question</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% block content %}
+        {% for question in questions %}
+        <tr>
+        
+        <td>{{ question.user_id }}</td>
+        <td><li><a href= "q/{{ question.id }}">{{ question.text }}</a></li></td> 
+           
+        </tr>
+        {% endfor %}   
+        {% endblock %} 
+      </tbody>
+    </table>    
+
+

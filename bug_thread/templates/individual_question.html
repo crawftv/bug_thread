@@ -1,16 +1,35 @@
+<link rel="stylesheet" href="https://unpkg.com/picnic">
 {% block content %}
 <p>{{question.text}} {{question.section}} {{question.user_id}}</p>
 
 
 <div>
     <form action="/q/{{question.id}}" method = "post">
-        <input type="text" name ="answer" placeholder="Do you have a solution" question_id={{question.id}} >
+        <input type="text" name ="answer" placeholder="Do you have a solution" question_id={{question.id}}>
         <input type="submit" value="answer">
     </form>
 </div>
 {% if answers != None %}
-    {% for answer in answers %}
-        {{answer.text}}
-    {% endfor %}
+<table class="primary">
+        <thead>
+          <tr>
+            <th>Is a Solution</th>
+            <th>User</th>
+            <th>Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {% for answer in answers %}
+          <tr>
+          <td>{{ answer.is_solution }} </td>
+          <td>{{ answer.user_id }}</td>
+          <td>{{ answer.text }}</td> 
+             
+          </tr>
+          {% endfor %}   
+          
+        </tbody>
+      </table>    
 {% endif %}
 {% endblock %}

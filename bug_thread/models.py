@@ -5,6 +5,8 @@ DB = SQLAlchemy()
 class User(DB.Model):
     id = DB.Column(DB.String, primary_key=True, unique =True)
     name = DB.Column(DB.String(30),nullable=False)
+    email_verified = DB.Column(DB.Boolean,nullable=False)
+    user_id = DB.Column(DB.String(30),nullable=False)
     
 
 

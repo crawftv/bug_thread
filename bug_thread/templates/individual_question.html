@@ -5,8 +5,8 @@
 
 <div>
     <form action="/q/{{question.id}}" method = "post">
-        <input type="text" name ="answer" placeholder="Do you have a solution" question_id={{question.id}}>
-        <input type="submit" value="answer">
+        <textarea type="text" name ="answer" placeholder="Do you have a solution" question_id={{question.id}}></textarea>
+        <input type="submit" value="Submit Answer">
     </form>
 </div>
 {% if answers != None %}
